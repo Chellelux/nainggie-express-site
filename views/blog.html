@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog</title>
+</head>
+<body>
+    <h1>Dynamic Blog</h1>
+    <div id="blog-container"></div> 
+
+    <script>
+        fetch('/api/posts')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('blog-container');
+                if (data.length === 0) {
+                    container.innerHTML = '<p>No posts found.</p>';
+                    return;
+                }
+                data.forEach(post => {
+                    const postDiv = document.createElement('div');
+                    postDiv.innerHTML = `
+                        <h2>${post.title}</h2>
+                        <p>${post.content}</p>
+                        <hr>
+                    `;
+                    container.appendChild(postDiv);
+                });
+            })
+            .catch(err => console.error("Error fetching posts:", err));
+    </script>
+</body>
+</html>
