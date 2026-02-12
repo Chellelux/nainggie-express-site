@@ -1,0 +1,12 @@
+[
+  {
+    "title": "My First Blog Post",
+    "content": "This is the content of my first post dynamically loaded from JSON.",
+    "date": "2026-02-13"
+  },
+  {
+    "title": "Learning Express",
+    "content": "Express makes it easy to build multipage sites and APIs!",
+    "date": "2026-02-14"
+  }
+]
