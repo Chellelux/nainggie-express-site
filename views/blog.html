@@ -1,32 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Blog</title>
 </head>
 <body>
     <h1>My Dynamic Blog Page</h1>
-    <div id="blog-container"></div> 
+
+    <div id="posts-container">Loading posts...</div>
 
     <script>
+        // 2. The Script: This fetches the data from your server
         fetch('/api/posts')
-            .then(res => res.json())
+            .then(response => response.json())
             .then(data => {
-                const container = document.getElementById('blog-container');
-                if (data.length === 0) {
-                    container.innerHTML = '<p>No posts found.</p>';
-                    return;
-                }
+                const container = document.getElementById('posts-container');
+                container.innerHTML = ''; // Clear the "Loading" text
+
+                // 3. The Loop: Create HTML for each post in posts.json
                 data.forEach(post => {
-                    const postDiv = document.createElement('div');
-                    postDiv.innerHTML = `
+                    const postElement = document.createElement('div');
+                    postElement.className = 'post';
+                    postElement.innerHTML = `
                         <h2>${post.title}</h2>
+                        <p><em>${post.date}</em></p>
                         <p>${post.content}</p>
                         <hr>
                     `;
-                    container.appendChild(postDiv);
+                    container.appendChild(postElement);
                 });
             })
-            .catch(err => console.error("Error fetching posts:", err));
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('posts-container').innerHTML = 'Failed to load posts.';
+            });
     </script>
 </body>
 </html>
